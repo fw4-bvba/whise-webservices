@@ -58,7 +58,7 @@ final class ListResponseBuffer
         foreach ($response[$this->request::LIST] as $index => $row) {
             $this->buffer[] = ResponseObject::create($row);
         }
-        if (empty($this->rowCount)) $this->rowCount = $response['rowCount'] ?? $response['QueryInfo']['RowCount'];
+        if (is_null($this->rowCount)) $this->rowCount = $response['rowCount'] ?? $response['QueryInfo']['RowCount'] ?? 0;
         // Correct erroneous rowCounts returned from Whise
         if (!empty($this->buffer)) $this->rowCount = max($this->rowCount, $page * $this->request->rowsPerPage + count($this->buffer));
     }
