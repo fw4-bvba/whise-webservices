@@ -13,7 +13,7 @@ class ListResponse implements \Countable, \IteratorAggregate
 
     public function __construct(ListRequest $request, ApiAdapterInterface $api_adapter, int $per_page = self::DEFAULT_ROWS_PER_PAGE)
     {
-        $this->buffer = new ListResponseBuffer($request, $api_adapter, $per_page);
+        $this->buffer = new ListResponseBuffer(clone $request, $api_adapter, $per_page);
     }
 
     public function get(int $position): ResponseObject
