@@ -3,7 +3,7 @@
 namespace Whise\Tests;
 
 use Whise\WebServices;
-use Whise\Exception\WebServiceException;
+use Whise\Exception\{RequestException, ResponseException, WebServiceException};
 use PHPUnit\Framework\TestCase;
 
 class WebServicesTest extends TestCase
@@ -45,6 +45,23 @@ class WebServicesTest extends TestCase
         $this->adapter->queueResponseFromFile('ErrorMessages.json');
         $this->expectException(WebServiceException::class);
         $this->webServices->getAvailabilityList();
+    }
+
+    // Property tests
+
+    public function testInvalidRequestProperty()
+    {
+        $request = new \Whise\Request\GetEstateListRequest();
+        $this->expectException(RequestException::class);
+        $request->invalid = 1;
+    }
+
+    public function testInvalidResponseProperty()
+    {
+        $this->adapter->queueResponseFromPaginatedFile('GetEstateList.json');
+        $estate = $this->webServices->getEstate(1);
+        $this->expectException(ResponseException::class);
+        $estate->invalid;
     }
 
     // List tests
