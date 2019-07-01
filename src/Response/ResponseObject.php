@@ -2,6 +2,8 @@
 
 namespace Whise\Response;
 
+use Whise\Exception\ResponseException;
+
 class ResponseObject implements \JsonSerializable
 {
     protected $_data = [];
