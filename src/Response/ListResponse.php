@@ -16,7 +16,7 @@ class ListResponse implements \Countable, \IteratorAggregate
         $this->buffer = new ListResponseBuffer(clone $request, $api_adapter, $per_page);
     }
 
-    public function get(int $position): ResponseObject
+    public function get(int $position)
     {
         return $this->buffer->get($position);
     }
