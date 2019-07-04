@@ -16,18 +16,20 @@ final class WebServices
         $this->defaultLanguage = $default_language;
     }
 
+    public function setDefaultLanguage(string $language)
+    {
+        // Set two language parameters due to inconsistency in webservices spec
+        $this->getApiAdapter()->setDefaultParams([
+            'Language' => $language,
+            'LanguageId' => $language,
+        ]);
+    }
+
     public function setApiAdapter(ApiAdapterInterface $api_adapter)
     {
-        $default = ['ClientId' => $this->clientId];
-
-        // Set two language parameters due to inconsistency in webservices spec
-        if (!empty($this->defaultLanguage)) {
-            $default['Language'] = $this->defaultLanguage;
-            $default['LanguageId'] = $this->defaultLanguage;
-        }
-
-        $api_adapter->setDefaultParams($default);
+        $api_adapter->setDefaultParams(['ClientId' => $this->clientId]);
         $this->apiAdapter = $api_adapter;
+        if (!empty($this->defaultLanguage)) $this->setDefaultLanguage($this->defaultLanguage);
     }
 
     protected function getApiAdapter(): ApiAdapterInterface
