@@ -43,6 +43,6 @@ final class HttpApiAdapter extends ApiAdapter
 
     public function setDefaultParams(array $params)
     {
-        $this->defaultParams = $params;
+        $this->defaultParams = array_merge($this->defaultParams, $params);
     }
 }
