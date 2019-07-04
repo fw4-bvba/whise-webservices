@@ -28,7 +28,7 @@ final class ListResponseBuffer
         return $this->rowCount;
     }
 
-    public function get(int $position): ?ResponseObject
+    public function get(int $position)
     {
         if ($this->request->rowsPerPage) {
             if (!$this->isBuffered($position)) {
@@ -56,7 +56,8 @@ final class ListResponseBuffer
         $this->buffer = [];
         $this->current = 0;
         foreach ($response[$this->request::LIST] as $index => $row) {
-            $this->buffer[] = ResponseObject::create($row);
+            if (is_array($row)) $this->buffer[] = ResponseObject::create($row);
+            else $this->buffer[] = $row;
         }
         if (is_null($this->rowCount)) $this->rowCount = $response['rowCount'] ?? $response['QueryInfo']['RowCount'] ?? 0;
         // Correct erroneous rowCounts returned from Whise

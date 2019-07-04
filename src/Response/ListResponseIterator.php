@@ -14,7 +14,7 @@ class ListResponseIterator implements \Iterator
 
     /* Iterator implementation */
 
-    public function current(): ?ResponseObject
+    public function current()
     {
         return $this->response->get($this->position);
     }
