@@ -20,10 +20,18 @@ abstract class RequestObject implements \JsonSerializable
         }
     }
 
-    public function __get(string $property)
+    public function &__get(string $property)
     {
         $property = self::normalizePropertyName($property);
-        return $this->_data[$property] ?? null;
+        if (!isset($this->_data[$property])) {
+            $null = null;
+            return $null;
+        } else if (is_array($this->_data[$property]) || is_object($this->_data[$property])) {
+            return $this->_data[$property];
+        } else {
+            $result = $this->_data[$property];
+            return $result;
+        }
     }
 
     public function __set(string $property, $value)
