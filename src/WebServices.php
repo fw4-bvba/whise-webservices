@@ -96,7 +96,7 @@ final class WebServices
 
     public function getLanguageList(): ListResponse
     {
-        return new ListResponse(new Request\GetLanguageListRequest(), $this->getApiAdapter());
+        return new ListResponse(new Request\GetLanguageListRequest(), $this->getApiAdapter(), 0);
     }
 
     public function getLoginList($params = []): ListResponse
