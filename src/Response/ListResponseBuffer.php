@@ -6,7 +6,7 @@ use Whise\Exception\WebServiceException;
 use Whise\Request\ListRequest;
 use Whise\ApiAdapterInterface;
 
-final class ListResponseBuffer
+class ListResponseBuffer
 {
     protected $request;
     protected $apiAdapter;
@@ -46,10 +46,19 @@ final class ListResponseBuffer
         $this->request->page = $page;
 
         $response = $this->apiAdapter->request($this->request);
+        if (!isset($response['QueryInfo']['RowCount']) && !isset($response['rowCount'])) {
+            throw new WebServiceException($this->request::ENDPOINT . ' gave unexpected response: ' . json_encode($response));
+        }
+
+        $this->bufferResponse($response);
+    }
+
+    protected function bufferResponse(array $response): void
+    {
         if (!empty($response['QueryInfo']['Error'])) {
             throw new WebServiceException('Error calling ' . $this->request::ENDPOINT . ': ' . $response['QueryInfo']['Error']);
         }
-        if ((!isset($response['QueryInfo']['RowCount']) && !isset($response['rowCount'])) || !isset($response[$this->request::LIST])) {
+        if (!isset($response[$this->request::LIST])) {
             throw new WebServiceException($this->request::ENDPOINT . ' gave unexpected response: ' . json_encode($response));
         }
 
@@ -60,8 +69,6 @@ final class ListResponseBuffer
             else $this->buffer[] = $row;
         }
         if (is_null($this->rowCount)) $this->rowCount = $response['rowCount'] ?? $response['QueryInfo']['RowCount'] ?? 0;
-        // Correct erroneous rowCounts returned from Whise
-        if (!empty($this->buffer)) $this->rowCount = max($this->rowCount, $page * $this->request->rowsPerPage + count($this->buffer));
     }
 
     protected function isBuffered(int $position): bool

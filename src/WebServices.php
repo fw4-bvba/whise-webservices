@@ -163,7 +163,7 @@ final class WebServices
     public function getHistoryList($params = []): ListResponse
     {
         $request = ($params instanceof Request\GetHistoryListRequest) ? $params : new Request\GetHistoryListRequest($params);
-        return new ListResponse($request, $this->getApiAdapter());
+        return new AltListResponse($request, $this->getApiAdapter());
     }
 
     public function getOwnerList($params = []): ListResponse
