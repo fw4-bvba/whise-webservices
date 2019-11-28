@@ -15,7 +15,8 @@ abstract class ApiAdapter implements ApiAdapterInterface
 
     public function request(Request\Request $request): array
     {
-        $json_body = json_decode($this->getBody($request), true);
+        $http_body = $this->getBody($request);
+        $json_body = json_decode($http_body, true);
         if (json_last_error() !== \JSON_ERROR_NONE) throw new WebServiceException($request::METHOD . ' to ' . $request::ENDPOINT . ' gave unexpected response: ' . $http_body);
         if (isset($json_body['ExceptionDetail']['Message'])) throw new WebServiceException($request::METHOD . ' to ' . $request::ENDPOINT . ' returned error: ' . $json_body['ExceptionDetail']['Message']);
         if (!isset($json_body['d'])) throw new WebServiceException($request::METHOD . ' to ' . $request::ENDPOINT . ' gave unexpected response: ' . $http_body);
