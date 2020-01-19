@@ -22,7 +22,7 @@ class ResponseObject implements \JsonSerializable
                 // Check for dates
                 is_string($value) &&
                 substr($value, 0, 6) === '/Date(' &&
-                preg_match('/^\/Date\((\d{10})(?:\d{3})([\+\-]\d{4})?\)\/$/', $value, $date)
+                preg_match('/^\/Date\((\d{9,10})(?:\d{3})([\+\-]\d{4})?\)\/$/', $value, $date)
             ) {
                 $this->$property = new \DateTime('@' . $date[1]);
                 if (!empty($date[2])) {
