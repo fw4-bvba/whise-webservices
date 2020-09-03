@@ -11,8 +11,15 @@ class ListResponse implements \Countable, \IteratorAggregate
 
     protected $buffer;
 
-    public function __construct(ListRequest $request, ApiAdapterInterface $api_adapter, int $per_page = self::DEFAULT_ROWS_PER_PAGE)
+    public function __construct(ListRequest $request, ApiAdapterInterface $api_adapter, ?int $per_page = null)
     {
+        if (is_null($per_page)) {
+            if (isset($request->rowsPerPage)) {
+                $per_page = $request->rowsPerPage;
+            } else {
+                $per_page = self::DEFAULT_ROWS_PER_PAGE;
+            }
+        }
         $this->buffer = new ListResponseBuffer(clone $request, $api_adapter, $per_page);
     }
 
