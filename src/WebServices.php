@@ -149,7 +149,9 @@ final class WebServices
     public function getEstate(int $estate_id): ?ResponseObject
     {
         $list = $this->getEstateList([
-            'EstateID' => $estate_id
+            'EstateID' => $estate_id,
+            'ShowDetails' => true,
+            'ShowRepresentatives' => true,
         ]);
         return count($list) ? $list->get(0) : null;
     }
