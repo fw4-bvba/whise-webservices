@@ -12,12 +12,12 @@ final class HttpApiAdapter extends ApiAdapter
     private $defaultParams = [];
     public $requestOptions = [];
 
-    public function __construct()
+    public function __construct(?string $base_uri = null)
     {
         $version = \PackageVersions\Versions::getVersion('fw4/whise-webservices');
 
         $this->httpClient = new \GuzzleHttp\Client([
-            'base_uri' => self::ROOT,
+            'base_uri' => $base_uri ?? self::ROOT,
             'http_errors' => false,
             'headers' => [
                 'User-Agent' => 'fw4-whise-webservices/' . $version,

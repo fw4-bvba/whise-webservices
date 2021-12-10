@@ -9,11 +9,13 @@ final class WebServices
     protected $clientId;
     protected $apiAdapter;
     protected $defaultLanguage;
+    protected $baseUri;
 
-    public function __construct(string $client_id, ?string $default_language = null)
+    public function __construct(string $client_id, ?string $default_language = null, ?string $base_uri = null)
     {
         $this->clientId = $client_id;
         $this->defaultLanguage = $default_language;
+        $this->baseUri = $base_uri;
     }
 
     public function setDefaultLanguage(string $language)
@@ -35,7 +37,7 @@ final class WebServices
     protected function getApiAdapter(): ApiAdapterInterface
     {
         if (empty($this->apiAdapter)) {
-            $this->setApiAdapter(new HttpApiAdapter());
+            $this->setApiAdapter(new HttpApiAdapter($this->baseUri));
         }
         return $this->apiAdapter;
     }
