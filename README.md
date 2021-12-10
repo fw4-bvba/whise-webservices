@@ -2,6 +2,8 @@
 
 PHP client for the [Whise](https://www.whise.eu) webservices.
 
+**⚠️ The Whise webservices are deprecated and will be shut down September 2022. It's strongly recommended to use the [Whise API](https://github.com/fw4-bvba/whise-api) instead.**
+
 ## Installation
 
 `composer require fw4/whise-webservices`

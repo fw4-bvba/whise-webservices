@@ -24,5 +24,6 @@
     },
     "config": {
         "optimize-autoloader": true
-    }
+    },
+    "abandoned": "fw4/whise-api"
 }
