@@ -165,9 +165,8 @@ abstract class RequestObject implements \JsonSerializable
                 $value = !!$value;
                 break;
             case 'DateTime':
-                if (is_string($value)) $value = strtotime($value);
                 if (is_int($value)) $value = new \DateTime('@' . $value);
-                else if (!$value instanceof \DateTime) $value = null;
+                else if (!$value instanceof \DateTime && !is_string($value)) $value = null;
                 break;
             default:
                 if (is_array($value)) $value = new $definition($value);
