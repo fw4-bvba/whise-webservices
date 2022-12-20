@@ -89,7 +89,7 @@ final class WebServices
     public function getDetailList($params = []): ListResponse
     {
         $request = ($params instanceof Request\GetDetailListRequest) ? $params : new Request\GetDetailListRequest($params);
-        return new ListResponse($request, $this->getApiAdapter());
+        return new AltListResponse($request, $this->getApiAdapter());
     }
 
     public function getDisplayStatusList($params = []): ListResponse
