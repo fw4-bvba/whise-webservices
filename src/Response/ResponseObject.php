@@ -92,6 +92,7 @@ class ResponseObject implements \JsonSerializable
 
 	/* JsonSerializable implementation */
 
+    #[\ReturnTypeWillChange]
 	public function jsonSerialize()
 	{
 		return $this->getData();
