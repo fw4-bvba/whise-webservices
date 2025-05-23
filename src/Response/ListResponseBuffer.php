@@ -12,6 +12,7 @@ class ListResponseBuffer
     protected $apiAdapter;
     protected $buffer;
     protected $rowCount;
+    protected $current;
 
     public function __construct(ListRequest $request, ApiAdapterInterface $api_adapter, int $per_page = 25)
     {
