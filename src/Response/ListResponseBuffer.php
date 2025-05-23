@@ -63,7 +63,6 @@ class ListResponseBuffer
         }
 
         $this->buffer = [];
-        $this->current = 0;
         foreach ($response[$this->request::LIST] as $index => $row) {
             if (is_array($row)) $this->buffer[] = ResponseObject::create($row);
             else $this->buffer[] = $row;
