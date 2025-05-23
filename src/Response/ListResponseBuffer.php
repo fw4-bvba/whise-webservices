@@ -12,7 +12,6 @@ class ListResponseBuffer
     protected $apiAdapter;
     protected $buffer;
     protected $rowCount;
-    protected $current;
 
     public function __construct(ListRequest $request, ApiAdapterInterface $api_adapter, int $per_page = 25)
     {
@@ -64,7 +63,6 @@ class ListResponseBuffer
         }
 
         $this->buffer = [];
-        $this->current = 0;
         foreach ($response[$this->request::LIST] as $index => $row) {
             if (is_array($row)) $this->buffer[] = ResponseObject::create($row);
             else $this->buffer[] = $row;
